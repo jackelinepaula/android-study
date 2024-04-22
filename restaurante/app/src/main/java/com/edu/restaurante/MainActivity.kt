@@ -16,27 +16,11 @@ class MainActivity: AppCompatActivity() {
     val lRestaurante = arrayListOf<Restaurante>();
     val gson = Gson()
 
-    //Listagem
 
     override fun onCreate(bundle : Bundle?) {
         super.onCreate(bundle)
         setContentView(R.layout.mainactivity_layout)
 
-        //Shared Preferences
-        val sp = getSharedPreferences("restaurantes", Context.MODE_PRIVATE)
-
-        //Função para salvar no shared preferences
-        fun salvarPrefs(array: ArrayList<Restaurante>){
-
-            var strRestaurante = gson.toJson(array)
-            Log.i("Restaurantes", strRestaurante)
-
-            sp.edit().apply{
-                putString("Lista", strRestaurante)
-                commit()
-            }
-
-        }
 
         //Elementos
         val edtNome = findViewById<EditText>(R.id.edtNome)
@@ -72,10 +56,27 @@ class MainActivity: AppCompatActivity() {
         btnLista.setOnClickListener{
             Log.i("getsp", sp.getString("Lista", " ").toString())
 
-            val intent: Intent = Intent(this, ListagemActivity::class.java)
+            val intent: Intent = Intent(this, ListaActivity::class.java)
             startActivity(intent)
         }
 
     }
+
+       //Função para salvar no shared preferences
+
+       fun salvarPrefs(array: ArrayList<Restaurante>){
+
+       //Shared Preferences
+       val sp = getSharedPreferences("restaurantes", Context.MODE_PRIVATE)
+       var strRestaurante = gson.toJson(array)
+       
+       Log.i("Restaurantes", strRestaurante)
+
+       sp.edit().apply{
+           putString("Lista", strRestaurante)
+           commit()
+       }
+
+   }
 }
 
