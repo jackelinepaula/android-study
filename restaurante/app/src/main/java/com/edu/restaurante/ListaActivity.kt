@@ -1,7 +1,9 @@
 package com.edu.restaurante
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 
@@ -21,16 +23,16 @@ class ListaActivity: AppCompatActivity() {
         val arrAdap = ArrayAdapter(this, android.R.layout.simple_list_item_1, lRestaurante)
 
         //Atribuindo adapter no lview
-        lView.adapter = adapter
+        lView.adapter = arrAdap
 
         //Adicionando lista no adapter com uma função com retorno
-        adapter.addAll(carregarPrefs())
+        arrAdap.addAll(carregarPrefs())
     }
 
     fun carregarPrefs(): ArrayList<Restaurante> {
         val sp = getSharedPreferences("restaurantes", Context.MODE_PRIVATE)
 
-        val restaurantes = sp.getString("array", "[]")
+        val restaurantes = sp.getString("Lista", "[]")
 
         val listaRestaurantes = gson.fromJson(restaurantes, ArrayList<Restaurante>()::class.java)
 

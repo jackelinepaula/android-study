@@ -54,8 +54,6 @@ class MainActivity: AppCompatActivity() {
         }
 
         btnLista.setOnClickListener{
-            Log.i("getsp", sp.getString("Lista", " ").toString())
-
             val intent: Intent = Intent(this, ListaActivity::class.java)
             startActivity(intent)
         }
@@ -66,14 +64,15 @@ class MainActivity: AppCompatActivity() {
 
        fun salvarPrefs(array: ArrayList<Restaurante>){
 
-       //Shared Preferences
-       val sp = getSharedPreferences("restaurantes", Context.MODE_PRIVATE)
-       var strRestaurante = gson.toJson(array)
+            //Shared Preferences
+            val sp = getSharedPreferences("restaurantes", Context.MODE_PRIVATE)
+           Log.i("getsp", sp.getString("Lista", " ").toString())
+            var strRestaurante = gson.toJson(array)
        
-       Log.i("Restaurantes", strRestaurante)
+            Log.i("Restaurantes", strRestaurante)
 
-       sp.edit().apply{
-           putString("Lista", strRestaurante)
+            sp.edit().apply{
+                putString("Lista", strRestaurante)
            commit()
        }
 
