@@ -27,34 +27,50 @@ class MainActivity : AppCompatActivity() {
         val btnSalvar = findViewById<Button>(R.id.btnSalvar)
         val btnPesquisar = findViewById<Button>(R.id.btnPesquisar)
 
-        btnSalvar.setOnClickListener(){
-            val contato = Contato(1,
+        btnSalvar.setOnClickListener() {
+            val contato = Contato(
+                1,
                 edtNome.text.toString(),
                 edtEmail.text.toString(),
-                edtTel.text.toString())
+                edtTel.text.toString()
+            )
 
             lContatos.add(contato)
             Log.i("ARRAYLIST", lContatos.toString())
 
-            salvarPrefs(lContatos)
+            salvarPrefs(edtNome.text.toString(), contato)
+        }
+
+        btnPesquisar.setOnClickListener {
+            val obj = carregarPrefs(edtNome.text.toString())
+
+            edtEmail.setText(obj.email)
+            edtTel.setText(obj.telefone)
+
         }
 
     }
 
-    fun salvarPrefs(array: ArrayList<Contato>){
-        val sp = getSharedPreferences("contatos", Context.MODE_PRIVATE)
+    fun salvarPrefs(chave: String, contato: Contato) {
+        val sp = this.getSharedPreferences("contatos", Context.MODE_PRIVATE)
 
-        Log.i("GETSP", sp.getString("ListaContato", "[]").toString())
-        val strContato = gson.toJson(array)
+        val obj = gson.toJson(contato)
 
-        Log.i("STRCONTATO", strContato)
-
-        sp.edit().apply{
-            putString("ListaContato", strContato)
-            commit()
+        with(sp.edit()) {
+            putString(chave, obj)
+            apply()
         }
+    }
 
+    fun carregarPrefs(chave: String): Contato {
+        val sp = this.getSharedPreferences("contatos", Context.MODE_PRIVATE)
 
+        val json = sp.getString(chave, "[]")
+        val obj = gson.fromJson(json, Contato::class.java)
+
+        Log.i("OBJ", obj.toString())
+
+        return obj
     }
 
 }
