@@ -7,18 +7,16 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
 
     val lContatos = arrayListOf<Contato>()
-    val pesquisaContatos = arrayListOf<Contato>()
 
     val gson = Gson()
-
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         setContentView(R.layout.mainactivity_layout)
-
         //Elementos
         val edtNome = findViewById<EditText>(R.id.edtNome)
         val edtEmail = findViewById<EditText>(R.id.edtEmail)
@@ -38,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             lContatos.add(contato)
             Log.i("ARRAYLIST", lContatos.toString())
 
-            salvarPrefs(edtNome.text.toString(), contato)
+            salvarPrefs(lContatos)
         }
 
         btnPesquisar.setOnClickListener {
@@ -51,26 +49,39 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun salvarPrefs(chave: String, contato: Contato) {
+    fun salvarPrefs(array: ArrayList<Contato>) {
         val sp = this.getSharedPreferences("contatos", Context.MODE_PRIVATE)
 
-        val obj = gson.toJson(contato)
+        val obj = gson.toJson(array)
 
         with(sp.edit()) {
-            putString(chave, obj)
+            putString("Lista", obj)
             apply()
         }
+
+
     }
 
-    fun carregarPrefs(chave: String): Contato {
+    fun carregarPrefs(chave: String): Contato{
         val sp = this.getSharedPreferences("contatos", Context.MODE_PRIVATE)
 
-        val json = sp.getString(chave, "[]")
-        val obj = gson.fromJson(json, Contato::class.java)
+        val json = sp.getString("Lista", "[]")
 
+        val obj = gson.fromJson<ArrayList<Contato>>(json, object: TypeToken<ArrayList<Contato>>(){}.type)
         Log.i("OBJ", obj.toString())
 
-        return obj
+        for (c in obj){
+            if(chave == c.nome){
+                return c
+                Log.i("NOME", c.nome)
+            }
+        }
+
+        val defC = Contato()
+
+        return defC
+
     }
 
 }
+
