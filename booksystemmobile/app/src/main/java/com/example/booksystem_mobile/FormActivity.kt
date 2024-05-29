@@ -1,5 +1,6 @@
 package com.example.booksystem_mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -28,6 +29,7 @@ class FormActivity : AppCompatActivity() {
         val edtAutor = findViewById<EditText>(R.id.edtAutor)
 
         val btnSalvar = findViewById<Button>(R.id.btnSalvar)
+        val btnCatalogo = findViewById<Button>(R.id.btnCatalogo)
 
         btnSalvar.setOnClickListener{
             val livro = Livro(1, edtTitulo.text.toString(), edtAutor.text.toString())
@@ -57,8 +59,10 @@ class FormActivity : AppCompatActivity() {
             okhttp.newCall(req).enqueue(res)
         }
 
+        btnCatalogo.setOnClickListener {
+            startActivity(Intent(this, CatalogoActivity::class.java))
+        }
 
-        
 
 
     }
