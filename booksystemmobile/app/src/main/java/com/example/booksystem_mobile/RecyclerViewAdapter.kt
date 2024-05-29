@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class RecyclerViewAdapter(private val dataSet: Array<String>) :
+class RecyclerViewAdapter(private val dataSet: Array<Livro>) :
     RecyclerView.Adapter<LivroViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): LivroViewHolder{
@@ -18,12 +18,10 @@ class RecyclerViewAdapter(private val dataSet: Array<String>) :
     }
 
     override fun onBindViewHolder(viewHolder: LivroViewHolder, position: Int){
-        viewHolder.txtTitulo.text = dataSet[position]
-        viewHolder.txtAutor.text = dataSet[position]
+        viewHolder.txtTitulo.text = dataSet[position].titulo
+        viewHolder.txtAutor.text = dataSet[position].autor
     }
 
     override fun getItemCount() = dataSet.size
-
-
 
 }
