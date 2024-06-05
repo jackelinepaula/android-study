@@ -32,7 +32,7 @@ class FormActivity : AppCompatActivity() {
         val btnCatalogo = findViewById<Button>(R.id.btnCatalogo)
 
         btnSalvar.setOnClickListener{
-            val livro = Livro(1, edtTitulo.text.toString(), edtAutor.text.toString())
+            val livro = Livro( null, edtTitulo.text.toString(), edtAutor.text.toString())
             val livroJson = gson.toJson(livro)
 
             val body = livroJson.toRequestBody("application/json".toMediaTypeOrNull())
@@ -45,7 +45,7 @@ class FormActivity : AppCompatActivity() {
             val res = object : Callback{
 
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.e("reqlivro", "call ${call} | Exception ${e.message.toString()}" )
+                    Log.i("faillivro", "call ${call} | Exception ${e.message.toString()}" )
                 }
 
                 override fun onResponse(call: Call, response: Response) {

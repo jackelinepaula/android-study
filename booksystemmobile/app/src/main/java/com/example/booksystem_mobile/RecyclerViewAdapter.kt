@@ -1,12 +1,11 @@
 package com.example.booksystem_mobile
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class RecyclerViewAdapter(private val dataSet: Array<Livro>) :
+class RecyclerViewAdapter(private val dataSet: ArrayList<Livro>) :
     RecyclerView.Adapter<LivroViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): LivroViewHolder{
