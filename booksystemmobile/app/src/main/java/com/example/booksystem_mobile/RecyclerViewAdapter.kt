@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 class RecyclerViewAdapter(private val dataSet: ArrayList<Livro>) :
     RecyclerView.Adapter<LivroViewHolder>() {
 
+        val repository = LivroRepository()
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): LivroViewHolder{
 
         val view = LayoutInflater.from(viewGroup.context)
@@ -19,6 +21,9 @@ class RecyclerViewAdapter(private val dataSet: ArrayList<Livro>) :
     override fun onBindViewHolder(viewHolder: LivroViewHolder, position: Int){
         viewHolder.txtTitulo.text = dataSet[position].titulo
         viewHolder.txtAutor.text = dataSet[position].autor
+        viewHolder.btnExcluir.setOnClickListener{
+            repository.delete(dataSet[position].id)
+        }
     }
 
     override fun getItemCount() = dataSet.size
