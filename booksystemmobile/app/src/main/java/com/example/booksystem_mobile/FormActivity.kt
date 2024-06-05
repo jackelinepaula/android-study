@@ -32,7 +32,7 @@ class FormActivity : AppCompatActivity() {
         val btnCatalogo = findViewById<Button>(R.id.btnCatalogo)
 
         btnSalvar.setOnClickListener{
-            val livro = Livro( null, edtTitulo.text.toString(), edtAutor.text.toString())
+            val livro = Livro("", edtTitulo.text.toString(), edtAutor.text.toString())
             val livroJson = gson.toJson(livro)
 
             val body = livroJson.toRequestBody("application/json".toMediaTypeOrNull())

@@ -25,8 +25,6 @@ class CatalogoActivity : AppCompatActivity(){
         super.onCreate(bundle)
         setContentView(R.layout.catagolo_layout);
 
-        val btnExcluir = findViewById<Button>(R.id.btnExcluir)
-
         val recycle = findViewById<RecyclerView>(R.id.rcvLivros)
 
         val adapter = RecyclerViewAdapter(dados)
